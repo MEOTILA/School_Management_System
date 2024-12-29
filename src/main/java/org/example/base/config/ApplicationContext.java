@@ -1,15 +1,10 @@
 package org.example.base.config;
 
 import org.example.entity.Student;
-import org.example.repository.AdminRepository;
 import org.example.repository.StudentRepository;
-//import org.example.repository.impl.AdminRepositoryImpl;
 import org.example.repository.impl.StudentRepositoryImpl;
-import org.example.service.AdminService;
 import org.example.service.StudentService;
 import org.example.service.impl.StudentServiceImpl;
-
-import java.sql.Connection;
 
 public class ApplicationContext {
     //private static Connection CONNECTION;

@@ -1,11 +1,8 @@
 package org.example;
 
 import org.example.base.config.ApplicationContext;
-import org.example.entity.Admin;
 import org.example.entity.Student;
-import org.example.service.AdminService;
 import org.example.service.StudentService;
-import org.example.service.impl.StudentServiceImpl;
 
 public class Main {
 

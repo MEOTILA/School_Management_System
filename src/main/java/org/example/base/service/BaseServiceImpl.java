@@ -5,7 +5,6 @@ import jakarta.validation.ValidationException;
 import lombok.Getter;
 import org.example.base.model.BaseEntity;
 import org.example.base.repository.BaseRepository;
-import org.example.base.repository.BaseRepositoryImpl;
 import org.example.datasource.SessionFactoryInstance;
 import org.example.exception.NotFoundException;
 import org.example.validation.Validation;
