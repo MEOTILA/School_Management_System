@@ -2,42 +2,44 @@ package org.example.base.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.example.base.model.BaseEntity;
+import org.hibernate.Session;
 
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
-public abstract class BaseRepositoryImpl<ID extends Serializable, T extends BaseEntity<ID>> implements BaseRepository<ID, T> {
-    protected final Connection connection;
+public abstract class BaseRepositoryImpl<ID extends Serializable, T extends BaseEntity<ID>>
+        implements BaseRepository<ID, T> {
 
+    private final Class<T> entityClass;
 
     @Override
-
-    public void save(T entity) {
-        String sql = "INSERT INTO " + getTableName() + " " + getColumnName() + " VALUES" + getCountOfParams();
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            fillParamForStatement(statement, entity, false);
-            statement.executeUpdate();
-            statement.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public T save(Session session, T entity) {
+        session.persist(entity);
+        return entity;
     }
 
-    public abstract String getTableName();
+    @Override
+    public List<T> findAll(Session session) {
+        return session.createQuery("from " + entityClass.getName(), entityClass)
+                .list();
+    }
 
-    public abstract String getColumnName();
+    @Override
+    public Optional<T> findById(Session session, ID id) {
+        return session.byId(entityClass)
+                .loadOptional(id);
+    }
 
-    public abstract String getCountOfParams();
-
-    public abstract void fillParamForStatement(PreparedStatement preparedStatement,
-                                               T type,
-                                               boolean isCountOnly) throws SQLException;
-
-
+    @Override
+    public int delete(Session session, ID id) {
+        return session
+                .createMutationQuery("DELETE FROM " + entityClass.getName() + " e WHERE e.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }

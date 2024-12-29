@@ -1,8 +1,9 @@
-package org.example.repository;
+/*
+package org.example.repository.impl;
 
-import org.example.base.repository.BaseRepository;
 import org.example.base.repository.BaseRepositoryImpl;
 import org.example.entity.Admin;
+import org.example.repository.AdminRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,3 +39,4 @@ public class AdminRepositoryImpl extends BaseRepositoryImpl<Integer, Admin> impl
 
 
 }
+*/

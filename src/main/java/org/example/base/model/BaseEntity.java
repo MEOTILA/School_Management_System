@@ -1,13 +1,20 @@
 package org.example.base.model;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.io.Serializable;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
+@MappedSuperclass
 public class BaseEntity<ID extends Serializable> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
 
 }
