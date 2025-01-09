@@ -1,6 +1,8 @@
 package org.example.service.impl;
 
 import org.example.base.service.BaseServiceImpl;
+import org.example.datasource.SessionFactoryInstance;
+import org.example.dto.StudentDTO;
 import org.example.entity.Student;
 import org.example.repository.StudentRepository;
 import org.example.service.StudentService;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 public class StudentServiceImpl extends BaseServiceImpl<Long, Student, StudentRepository>
         implements StudentService {
+
     public StudentServiceImpl(StudentRepository studentRepository) {
         super(studentRepository);
     }
@@ -29,6 +32,24 @@ public class StudentServiceImpl extends BaseServiceImpl<Long, Student, StudentRe
     @Override
     public Student save(Student student) {
         return super.save(student);
+    }
+
+    @Override
+    public Student save(StudentDTO studentDTO) {
+        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+            session.beginTransaction();
+            try {
+                var student = Student.from(studentDTO);
+                super.save(student);
+                session.getTransaction().commit();
+                return student;
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                session.getTransaction().rollback();
+                throw e;
+            }
+        }
     }
 
     @Override

@@ -39,7 +39,6 @@ public record StudentDTO(
                 if (enrollment == null) {
                     throw new IllegalArgumentException("Enrollment list contains a null value");
                 }
-                // Add further validation for `Enrollment` entity if required
             }
         }
     }

@@ -39,15 +39,14 @@ public class Student extends BaseEntity<Long> {
 
     public static Student from(StudentDTO studentDTO) {
         var student = new Student();
-        student.setId(null); // Assuming you're setting a new ID (null for auto-generation)
+        student.setId(null);
         student.setName(studentDTO.name());
         student.setEmail(studentDTO.email());
 
-        // Map enrollments if necessary
         if (studentDTO.enrollments() != null) {
             student.setEnrollments(studentDTO.enrollments());
         } else {
-            student.setEnrollments(List.of()); // Initialize an empty list if enrollments is null
+            student.setEnrollments(List.of());
         }
 
         return student;
